@@ -1,19 +1,35 @@
 #include "square.h"
+#include "vector.h"
 
 Square::Square() : A{Point{}}, B{Point{}}, C{Point{}}, D{Point{}} {}
 
-Square::Square(Point a, Point b, Point c, Point d) : A{a}, B{b}, C{c}, D{d} {}
-
-Point Square::center() const {
-	return Point{ (D.X() + A.X()) / 2, (B.Y() + A.Y()) / 2};
+Square::Square(Point a, Point b, Point c, Point d) : A{a}, B{b}, C{c}, D{d} {
+	Vector AB{ A, B }, BC{ B, C }, CD { C, D }, DA { D, A };
+	if (AB * BC || BC * CD || CD * DA || DA * AB) {
+		throw std::logic_error("The sides of the square should be perpendicular");
+	} 
+	if (Length(AB) != Length(BC) || Length(BC) != Length(CD) || Length(CD) != Length(DA) || Length(DA) != Length(AB)) {
+		throw std::logic_error("The sides of the square should be equal");
+	}
 }
 
-double Square::area() const {
-	return length(D, A) * length(B, A);
+Point Square::Center() const {
+	return Point{ (B + D) / 2 };
 }
 
-std::ostream &Square::print(std::ostream &out) const {
-	out << A << " " << B << " " << C << " " << D;
+double Square::Area() const {
+	return Length(D, A) * Length(B, A);
+}
+
+std::ostream &Square::Print(std::ostream &out) const {
+	out << "Square: p1 = " << A << ", p2 = " << B << ", p3 = " << C << ", p4 = " << D;
 
 	return out;
+}
+
+std::istream &Square::Scan(std::istream &in) {
+	in >> A >> B >> C >> D;
+	(*this) = Square(A, B, C, D);
+
+	return in;
 }

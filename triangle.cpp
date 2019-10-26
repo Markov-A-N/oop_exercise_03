@@ -1,27 +1,40 @@
 #include "triangle.h"
 #include "figure.h"
 #include "point.h"
+#include "vector.h"
+#include <cmath>
 
 Triangle::Triangle() : A{Point{}}, B{Point{}}, C{Point{}} {}
 
-Triangle::Triangle(Point a, Point b, Point c) : A{a}, B{b}, C{c} {}
-
-Point Triangle::center() const {
-	Point mid_of_base{ (C.X() + A.X()) / 2, (C.Y() + A.Y()) / 2 };
-	Point center_point{ (B.X() + 2 * mid_of_base.X()) / 3, (B.Y() + 2 * mid_of_base.Y()) / 3 };
-
-	return center_point;
+Triangle::Triangle(Point a, Point b, Point c) : A{a}, B{b}, C{c} {
+	double AB = Length(A, B), BC = Length(B, C), AC = Length(A, C);
+	if (AB >= BC + AC || BC >= AB + AC || AC >= AB + BC) {
+		throw std::logic_error("Any side of the triangle must be less than the sum of the other two sides");
+	}
 }
 
-double Triangle::area() const {
-	double AB = length(B, A), BC = length(C, B), AC = length(C, A);
+Point Triangle::Center() const {
+	Point mid_of_base{ (A + C) / 2 };
+
+	return { (B + mid_of_base * 2) / 3 };
+}
+
+double Triangle::Area() const {
+	double AB = Length(A, B), BC = Length(B, C), AC = Length(A, C);
 	double perim = AB + BC + AC; 
 
 	return sqrt((perim / 2) * (perim / 2 - AB) * (perim / 2 - BC) * (perim / 2 - AC));
 }
 
-std::ostream &Triangle::print(std::ostream &out) const {
-	out << A << " " << B << " " << C;
+std::ostream &Triangle::Print(std::ostream &out) const {
+	out << "Triangle: p1 = " << A << ", p2 = " << B << ", p3 = " << C;
 
 	return out;
+}
+
+std::istream &Triangle::Scan(std::istream &in) {
+	in >> A >> B >> C;
+	(*this) = Triangle(A, B, C);
+
+	return in;
 }

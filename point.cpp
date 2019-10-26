@@ -15,19 +15,30 @@ double Point::Y() const {
 	return y;
 }
 
-Point Point::operator/(double a) const {
-	Point temp{*this};
-	temp.x = x / 2;
-	temp.y = y / 2;
-
-	return temp;
+Point Point::operator+(const Point &a) const {
+	return {x + a.x, y + a.y};
 }
 
-double length(const Point &a, const Point &b) {
-	return sqrt(pow((b.x - a.x), 2) + pow((b.y - a.y), 2));
+Point Point::operator-(const Point &a) const {
+	return {x - a.x, y - a.y};
+}
+
+Point Point::operator*(double a) const {
+	return {x * a, y * a};
+}
+
+Point Point::operator/(double a) const {
+	return {x / a, y / a};
 }
 
 std::ostream &operator<<(std::ostream &out, const Point &a) {
 	out << "(" << a.x << "; " << a.y << ")";
+
 	return out;
+}
+
+std::istream &operator>>(std::istream &in, Point &a) {
+	in >> a.x >> a.y;
+
+	return in;
 }

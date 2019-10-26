@@ -3,16 +3,17 @@
 
 #include "point.h"
 #include "figure.h"
-#include <cmath>
+#include "vector.h"
 
-class Triangle : public figure {
+class Triangle : public Figure {
 	Point A, B, C;
 public:
 	Triangle();
 	Triangle(Point a, Point b, Point c);
-	Point center() const override;
-	double area() const override;
-	std::ostream &print(std::ostream &out) const override; 
+	Point Center() const override;
+	double Area() const override;
+	std::ostream &Print(std::ostream &out) const override; 
+	std::istream &Scan(std::istream &in) override;
 };
 
 #endif //TRIANGLE_H

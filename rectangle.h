@@ -3,15 +3,17 @@
 
 #include "point.h"
 #include "figure.h"
+#include "vector.h"
 
-class Rectangle : public figure {
+class Rectangle : public Figure {
 	Point A, B, C, D;
 public:
 	Rectangle();
 	Rectangle(Point a, Point b, Point c, Point d);
-	Point center() const override;
-	double area() const override;
-	std::ostream &print(std::ostream &out) const override; 
+	Point Center() const override;
+	double Area() const override;
+	std::ostream &Print(std::ostream &out) const override; 
+	std::istream &Scan(std::istream &in) override;
 };
 
 #endif //RECTANGLE_H
