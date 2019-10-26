@@ -18,7 +18,7 @@ Point Square::Center() const {
 }
 
 double Square::Area() const {
-	return Length(D, A) * Length(B, A);
+	return Length(A, B) * Length(A, B);
 }
 
 std::ostream &Square::Print(std::ostream &out) const {
