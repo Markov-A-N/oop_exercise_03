@@ -5,9 +5,26 @@ Rectangle::Rectangle() : A{Point{}}, B{Point{}}, C{Point{}}, D{Point{}} {}
 
 Rectangle::Rectangle(Point a, Point b, Point c, Point d) : A{a}, B{b}, C{c}, D{d} {
 	Vector AB{ A, B }, BC{ B, C }, CD { C, D }, DA { D, A };
+	if (!is_parallel(DA, BC)) {
+		std::swap(A, B);
+		AB = { A, B };
+		BC = { B, C };
+		CD = { C, D };
+		DA = { D, A };
+	}
+	if (!is_parallel(AB, CD)) {
+		std::swap(B, C);
+		AB = { A, B };
+		BC = { B, C };
+		CD = { C, D };
+		DA = { D, A };
+	}
 	if (AB * BC || BC * CD || CD * DA || DA * AB) {
 		throw std::logic_error("The sides of the rectangle should be perpendicular");
 	} 
+	if (!Length(AB) || !Length(BC) || !Length(CD) || !Length(DA)) {
+		throw std::logic_error("The sides of the rectangle must be greater than zero");
+	}
 }
 
 Point Rectangle::Center() const {

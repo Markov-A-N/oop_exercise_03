@@ -9,7 +9,7 @@ Triangle::Triangle() : A{Point{}}, B{Point{}}, C{Point{}} {}
 Triangle::Triangle(Point a, Point b, Point c) : A{a}, B{b}, C{c} {
 	double AB = Length(A, B), BC = Length(B, C), AC = Length(A, C);
 	if (AB >= BC + AC || BC >= AB + AC || AC >= AB + BC) {
-		throw std::logic_error("Any side of the triangle must be less than the sum of the other two sides");
+		throw std::logic_error("Points must not be on the same line.");
 	}
 }
 

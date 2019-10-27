@@ -6,8 +6,8 @@
 #include "vector.h"
 
 class Square : public Figure {
-	Point A, B, C, D;
 public:
+	Point A, B, C, D;
 	Square();
 	Square(Point a, Point b, Point c, Point d);
 	Point Center() const override;

@@ -10,10 +10,21 @@ double Vector::operator*(const Vector &a) const {
 	return (x * a.x) + (y * a.y);
 }
 
+Vector &Vector::operator=(const Vector &a) {
+	x = a.x;
+	y = a.y;
+
+	return *this;
+}
+
 double Length(const Point &a, const Point &b) {
 	return sqrt(pow((b.X() - a.X()), 2) + pow((b.Y() - a.Y()), 2));
 }
 
 double Length(const Vector &a) {
 	return sqrt(pow(a.x, 2) + pow(a.y, 2));
+}
+
+bool is_parallel(const Vector &a, const Vector &b) {
+	return (a.x * b.y) - (a.y * b.x) == 0;
 }
